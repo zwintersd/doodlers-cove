@@ -1,0 +1,64 @@
+.area-selector {
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+  padding: 8px 12px;
+}
+
+.area-header {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #9B8BB8;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.area-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.area-tab {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  background: #F8F5FF;
+  border: 2px solid #D5C4E8;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #6A5A8A;
+  transition: all 0.1s ease;
+}
+
+.area-tab:hover {
+  background: #F0EBFF;
+  border-color: #C5B4D8;
+}
+
+.area-tab.current {
+  background: #E8E0F8;
+  border-color: #A594C8;
+  color: #5A4A7A;
+}
+
+.area-tab.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #F5F5F5;
+  color: #9A9A9A;
+}
+
+.area-tab.locked.affordable {
+  opacity: 0.8;
+  cursor: pointer;
+  border-style: dashed;
+}
+
+.area-tab.locked.affordable:hover {
+  opacity: 1;
+  background: #FFF8F0;
+}
+
+.lock-icon {
+  opacity: 0.7;
+}
