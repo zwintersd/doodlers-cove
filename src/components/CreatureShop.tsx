@@ -37,7 +37,7 @@ function formatNumber(n: number): string {
 
 export function CreatureShop({ creatures, resources, getCreatureCost, onPurchase }: CreatureShopProps) {
   return (
-    <div className="creature-shop">
+    <div className="creature-shop doodle-panel">
       <div className="shop-header">~ Friends ~</div>
       <div className="creature-list">
         {creatures.map((creature) => {
@@ -48,11 +48,17 @@ export function CreatureShop({ creatures, resources, getCreatureCost, onPurchase
           return (
             <button
               key={creature.id}
-              className={`creature-item ${canAfford ? 'affordable' : ''} ${hasAny ? 'owned' : ''}`}
+              className={`creature-item doodle-border ${canAfford ? 'affordable' : ''} ${hasAny ? 'owned' : ''}`}
               onClick={() => canAfford && onPurchase(creature.id)}
               disabled={!canAfford}
             >
-              <div className="creature-art">{creatureArt[creature.id] || '??'}</div>
+              <div className="creature-art">
+                {creature.id === 'sparkle-bunny' ? (
+                  <img src="/assets/creatures/sparkle-bunny.png" alt="Sparkle Bunny" className="creature-img" />
+                ) : (
+                  creatureArt[creature.id] || '??'
+                )}
+              </div>
               <div className="creature-info">
                 <div className="creature-header">
                   <span className="creature-name">{creature.name}</span>

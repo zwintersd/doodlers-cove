@@ -28,16 +28,22 @@ export function ResourceDisplay({ resources }: ResourceDisplayProps) {
   )
 
   return (
-    <div className="resource-display">
+    <div className="resource-display doodle-panel">
       <div className="resource-header">~ Resources ~</div>
       <div className="resource-list">
         {visibleResources.map((resource) => (
           <div
             key={resource.id}
-            className="resource-item"
+            className="resource-item doodle-border"
             style={{ '--resource-color': resource.color } as React.CSSProperties}
           >
-            <span className="resource-icon">{resourceEmoji[resource.id]}</span>
+            <span className="resource-icon">
+              {resource.id === 'stardust' ? (
+                <img src="/assets/resources/stardust.png" alt="Stardust" className="resource-img" />
+              ) : (
+                resourceEmoji[resource.id]
+              )}
+            </span>
             <span className="resource-name">{resource.name}</span>
             <span className="resource-amount">{formatNumber(resource.amount)}</span>
             {resource.perSecond > 0 && (

@@ -1,6 +1,4 @@
 .resource-display {
-  background: #FFFEF5;
-  border: 3px solid #D5C4E8;
   padding: 12px;
   min-width: 200px;
 }
@@ -26,10 +24,16 @@
   align-items: center;
   gap: 8px;
   padding: 6px 8px;
-  background: var(--resource-color, #F5F5F5);
-  border: 2px solid #E0E0E0;
+  background: rgba(255, 255, 255, 0.3);
   font-family: 'Patrick Hand', cursive;
   font-size: 16px;
+  border-color: var(--resource-color, var(--border-main)) !important;
+}
+
+.resource-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .resource-icon {

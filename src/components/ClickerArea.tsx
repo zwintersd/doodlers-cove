@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import type { Area, AreaType } from '../types/game'
 import './ClickerArea.css'
 
@@ -9,71 +9,122 @@ interface ClickerAreaProps {
   onAreaClick: () => void
 }
 
-// Area decorations (ASCII art placeholders)
-const areaDecorations: Record<AreaType, string> = {
-  meadow: `
-    *  .  *
-  .    *    .
-    .  *  .
-  *    .    *
-`,
-  'rainbow-falls': `
-    ~ ~ ~ ~
-   ~  ~ ~  ~
-    ~ ~ ~ ~
-   ~~~~~~~~
-`,
-  'dream-garden': `
-    @ o @ o
-   o  @  o  @
-    @ o @ o
-   o  @  o  @
-`,
-  'heart-cave': `
-    <3  <>
-   <>  <3  <>
-    <>  <3
-   <3  <>  <3
-`,
+interface Point {
+  x: number
+  y: number
+  pressure: number
 }
 
 export function ClickerArea({ area, clickAmount, onAreaClick }: ClickerAreaProps) {
-  const [clickEffect, setClickEffect] = useState<{ x: number; y: number; id: number }[]>([])
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [isDrawing, setIsDrawing] = useState(false)
+  const lastPoint = useRef<Point | null>(null)
+  const scribbleLength = useRef(0)
+  const [accumulatedGathers, setAccumulatedGathers] = useState(0)
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const id = Date.now()
+  // Clear canvas periodically or on area change
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    scribbleLength.current = 0
+  }, [area.id])
 
-    setClickEffect((prev) => [...prev.slice(-5), { x, y, id }])
-    setTimeout(() => {
-      setClickEffect((prev) => prev.filter((effect) => effect.id !== id))
-    }, 600)
+  const startDrawing = (e: React.PointerEvent) => {
+    setIsDrawing(true)
+    const rect = canvasRef.current?.getBoundingClientRect()
+    if (!rect) return
+    lastPoint.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      pressure: e.pressure || 0.5,
+    }
+  }
 
-    onAreaClick()
+  const draw = useCallback((e: React.PointerEvent) => {
+    if (!isDrawing || !lastPoint.current || !canvasRef.current) return
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const rect = canvas.getBoundingClientRect()
+    const currentPoint: Point = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      pressure: e.pressure || 0.5,
+    }
+
+    // Calculate distance for gathering logic
+    const dist = Math.sqrt(
+      Math.pow(currentPoint.x - lastPoint.current.x, 2) +
+      Math.pow(currentPoint.y - lastPoint.current.y, 2)
+    )
+    scribbleLength.current += dist
+
+    // If they've "doodled" enough, trigger a gather
+    // 50 units of distance = 1 gather
+    if (scribbleLength.current >= 50) {
+      onAreaClick()
+      scribbleLength.current -= 50
+      setAccumulatedGathers(prev => prev + 1)
+    }
+
+    // Draw the line
+    ctx.beginPath()
+    ctx.moveTo(lastPoint.current.x, lastPoint.current.y)
+    ctx.lineTo(currentPoint.x, currentPoint.y)
+
+    // Line style
+    ctx.strokeStyle = area.color || '#D5C4E8'
+    ctx.lineWidth = (2 + currentPoint.pressure * 10) // Pressure sensitivity!
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+
+    ctx.stroke()
+    lastPoint.current = currentPoint
+
+    // Fade effect logic - slowly clear the canvas so it doesn't get too messy
+    if (Math.random() < 0.05) {
+      ctx.fillStyle = 'rgba(255, 254, 245, 0.05)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+    }
+  }, [isDrawing, onAreaClick, area.color])
+
+  const stopDrawing = () => {
+    setIsDrawing(false)
+    lastPoint.current = null
   }
 
   return (
-    <div className="clicker-area" style={{ '--area-bg': getAreaBg(area.id) } as React.CSSProperties}>
+    <div className="clicker-area doodle-panel" style={{ '--area-bg': getAreaBg(area.id) } as React.CSSProperties}>
       <div className="area-title">.: {area.name} :.</div>
       <div className="area-description">{area.description}</div>
 
-      <button className="clicker-button" onClick={handleClick}>
-        <pre className="area-decoration">{areaDecorations[area.id]}</pre>
-        <div className="click-prompt">[ Click to Gather ]</div>
-        <div className="click-amount">+{clickAmount} per click</div>
-
-        {clickEffect.map((effect) => (
-          <span
-            key={effect.id}
-            className="click-effect"
-            style={{ left: effect.x, top: effect.y }}
-          >
-            +{clickAmount}
-          </span>
-        ))}
-      </button>
+      <div className="canvas-container">
+        <canvas
+          ref={canvasRef}
+          width={500}
+          height={300}
+          className="doodle-canvas"
+          onPointerDown={startDrawing}
+          onPointerMove={draw}
+          onPointerUp={stopDrawing}
+          onPointerLeave={stopDrawing}
+          style={{ touchAction: 'none' }} // Critical for tablet/touch
+        />
+        <div className="canvas-overlay">
+          {area.primaryResource === 'stardust' && (
+            <img src="/assets/resources/stardust.png" alt="Stardust" className="primary-resource-img floating" />
+          )}
+          <div className="doodle-prompt">[ Doodle with your pen/mouse! ]</div>
+          <div className="doodle-stats">
+            +{clickAmount} per doodle | Doodles: {accumulatedGathers}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

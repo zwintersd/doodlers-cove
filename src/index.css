@@ -6,22 +6,27 @@
 
 :root {
   /* Soft pastel palette */
-  --pastel-lavender: #E8D5F2;
-  --pastel-pink: #FFD5E5;
-  --pastel-mint: #D5F5E3;
-  --pastel-cream: #FFF9E6;
-  --pastel-rose: #FFCCD5;
-  --pastel-sky: #E6F3FF;
-  --pastel-peach: #F5E6D5;
+  /* Soft pastel palette - From ASSETS_MANIFEST.md */
+  --pastel-lavender: #E8D5F2; /* Stardust */
+  --pastel-pink: #FFD5E5;     /* Rainbow Drops */
+  --pastel-mint: #D5F5E3;     /* Dream Seeds */
+  --pastel-cream: #FFF9E6;    /* Moonbeams */
+  --pastel-rose: #FFCCD5;     /* Heart Gems */
+  --pastel-sky: #E6F3FF;      /* Cloud Fluff */
+  --pastel-peach: #F5E6D5;    /* Wish Petals */
 
+  /* UI colors */
   /* UI colors */
   --bg-main: #FFFEF8;
   --bg-panel: #FFFEF5;
   --border-main: #D5C4E8;
+  --border-dark: #7B68A8;
   --text-dark: #4A4A5A;
   --text-medium: #6A6A7A;
   --text-light: #9A9AAA;
   --accent: #9B8BB8;
+  --shadow-soft: 0 4px 0 rgba(123, 104, 168, 0.1);
+  --border-radius-doodle: 255px 15px 225px 15px/15px 225px 15px 255px;
 }
 
 html {
@@ -68,6 +73,24 @@ button {
   background: none;
   cursor: pointer;
   padding: 0;
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Doodle Utility Classes */
+.doodle-border {
+  border: 3px solid var(--border-main);
+  border-radius: var(--border-radius-doodle);
+}
+
+.doodle-panel {
+  background: var(--bg-panel);
+  border: 3px solid var(--border-main);
+  border-radius: var(--border-radius-doodle);
+  box-shadow: var(--shadow-soft);
 }
 
 button:focus {

@@ -18,7 +18,7 @@ export function UpgradeShop({ upgrades, resources, onPurchase }: UpgradeShopProp
 
   if (visibleUpgrades.length === 0) {
     return (
-      <div className="upgrade-shop">
+      <div className="upgrade-shop doodle-panel">
         <div className="shop-header">~ Upgrades ~</div>
         <div className="shop-empty">No upgrades available yet...</div>
       </div>
@@ -40,7 +40,7 @@ export function UpgradeShop({ upgrades, resources, onPurchase }: UpgradeShopProp
           return (
             <button
               key={upgrade.id}
-              className={`upgrade-item ${canAfford && !maxed ? 'affordable' : ''} ${maxed ? 'maxed' : ''}`}
+              className={`upgrade-item doodle-border ${canAfford && !maxed ? 'affordable' : ''} ${maxed ? 'maxed' : ''}`}
               onClick={() => canAfford && !maxed && onPurchase(upgrade.id)}
               disabled={!canAfford || maxed}
               style={{ '--upgrade-color': resources[upgrade.resourceType].color } as React.CSSProperties}

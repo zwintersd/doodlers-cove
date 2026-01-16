@@ -13,8 +13,10 @@
 .app-header {
   text-align: center;
   padding: 16px;
-  background: #FFFEF5;
-  border: 3px solid #D5C4E8;
+  background: var(--bg-panel);
+  border: 3px solid var(--border-main);
+  border-radius: var(--border-radius-doodle);
+  box-shadow: var(--shadow-soft);
   margin-bottom: 12px;
 }
 
@@ -63,8 +65,10 @@
 
 /* Stats bar */
 .stats-bar {
-  background: #FFFEF5;
-  border: 3px solid #D5C4E8;
+  background: var(--bg-panel);
+  border: 3px solid var(--border-main);
+  border-radius: var(--border-radius-doodle);
+  box-shadow: var(--shadow-soft);
   padding: 8px 16px;
   font-family: 'VT323', monospace;
   font-size: 16px;
@@ -86,8 +90,10 @@
   align-items: center;
   padding: 12px 16px;
   margin-top: 12px;
-  background: #FFFEF5;
-  border: 3px solid #D5C4E8;
+  background: var(--bg-panel);
+  border: 3px solid var(--border-main);
+  border-radius: var(--border-radius-doodle);
+  box-shadow: var(--shadow-soft);
 }
 
 .footer-text {

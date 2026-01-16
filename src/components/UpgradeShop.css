@@ -1,6 +1,4 @@
 .upgrade-shop {
-  background: #FFFEF5;
-  border: 3px solid #D5C4E8;
   padding: 12px;
   min-width: 240px;
 }
@@ -32,13 +30,13 @@
 }
 
 .upgrade-item {
-  background: var(--upgrade-color, #F5F5F5);
-  border: 2px solid #D0D0D0;
+  background: var(--bg-panel);
   padding: 10px 12px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.1s ease;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   opacity: 0.6;
+  border-color: var(--upgrade-color, var(--border-main)) !important;
 }
 
 .upgrade-item.affordable {
@@ -47,7 +45,8 @@
 }
 
 .upgrade-item.affordable:hover {
-  border-color: #8B7BA8;
+  border-color: var(--border-dark) !important;
+  transform: translateY(-2px);
 }
 
 .upgrade-item.maxed {
