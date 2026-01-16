@@ -6,6 +6,7 @@ import {
   CreatureShop,
   AreaSelector,
   MilestoneDisplay,
+  StatsPanel,
 } from './components'
 import './App.css'
 
@@ -47,6 +48,12 @@ function App() {
         <aside className="sidebar sidebar-left">
           <ResourceDisplay resources={state.resources} />
           <MilestoneDisplay milestones={state.milestones} />
+          <StatsPanel
+            state={state}
+            getClickAmount={getClickAmount}
+            getCreatureCost={getCreatureCost}
+            areas={areas}
+          />
         </aside>
 
         <section className="game-center">
