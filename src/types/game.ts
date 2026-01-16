@@ -34,26 +34,55 @@ export interface Upgrade {
 }
 
 export interface UpgradeEffect {
-  type: 'clickMultiplier' | 'autoGather' | 'unlockResource' | 'bonusChance'
+  type: 'clickMultiplier' | 'autoGather' | 'unlockResource' | 'bonusChance' | 'globalMultiplier' | 'creatureBoost' | 'synergyBonus'
   resourceAffected: ResourceType
   value: number
+  secondaryResource?: ResourceType // For synergy bonuses
 }
 
 export interface Creature {
   id: string
   name: string
   description: string
-  unlocked: boolean
+  count: number // How many of this creature you own
+  baseCost: { resource: ResourceType; amount: number }[]
+  costMultiplier: number // How much cost increases per purchase
   produces: { resource: ResourceType; amount: number }
-  cost: { resource: ResourceType; amount: number }[]
   icon: string
+}
+
+export interface Milestone {
+  id: string
+  name: string
+  description: string
+  requirement: MilestoneRequirement
+  reward: MilestoneReward
+  achieved: boolean
+  icon: string
+}
+
+export interface MilestoneRequirement {
+  type: 'totalResource' | 'totalClicks' | 'creatureCount' | 'upgradeCount' | 'areaUnlock'
+  resource?: ResourceType
+  creatureId?: string
+  amount: number
+}
+
+export interface MilestoneReward {
+  type: 'globalMultiplier' | 'clickBonus' | 'productionBonus' | 'unlockCreature' | 'unlockUpgrade'
+  value: number
+  resourceAffected?: ResourceType
+  targetId?: string // For unlocking specific creatures/upgrades
 }
 
 export interface GameState {
   resources: Record<ResourceType, Resource>
   upgrades: Upgrade[]
   creatures: Creature[]
+  milestones: Milestone[]
   totalClicks: number
+  totalResourcesGathered: Record<ResourceType, number> // Lifetime totals for milestones
+  globalMultiplier: number // Bonus from milestones
   currentArea: AreaType
   unlockedAreas: AreaType[]
   lastSaveTime: number

@@ -70,6 +70,13 @@
   font-size: 16px;
   color: #7B68A8;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stat-separator {
+  color: #D5C4E8;
 }
 
 /* Footer */

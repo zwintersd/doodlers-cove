@@ -5,6 +5,7 @@ import {
   UpgradeShop,
   CreatureShop,
   AreaSelector,
+  MilestoneDisplay,
 } from './components'
 import './App.css'
 
@@ -18,6 +19,8 @@ function App() {
     changeArea,
     resetGame,
     getClickAmount,
+    getCreatureCost,
+    totalCreatureCount,
     areas,
   } = useGameState()
 
@@ -43,6 +46,7 @@ function App() {
       <main className="app-main">
         <aside className="sidebar sidebar-left">
           <ResourceDisplay resources={state.resources} />
+          <MilestoneDisplay milestones={state.milestones} />
         </aside>
 
         <section className="game-center">
@@ -53,7 +57,11 @@ function App() {
             onAreaClick={handleClick}
           />
           <div className="stats-bar">
-            <span>Total Clicks: {state.totalClicks.toLocaleString()}</span>
+            <span>Clicks: {state.totalClicks.toLocaleString()}</span>
+            <span className="stat-separator">|</span>
+            <span>Friends: {totalCreatureCount}</span>
+            <span className="stat-separator">|</span>
+            <span>Multiplier: x{state.globalMultiplier.toFixed(2)}</span>
           </div>
         </section>
 
@@ -66,6 +74,7 @@ function App() {
           <CreatureShop
             creatures={state.creatures}
             resources={state.resources}
+            getCreatureCost={getCreatureCost}
             onPurchase={purchaseCreature}
           />
         </aside>

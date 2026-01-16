@@ -35,9 +35,18 @@
 
 .creature-item.owned {
   opacity: 1;
+  background: #F8FFF8;
+  border-color: #C0D8C0;
+}
+
+.creature-item.owned.affordable {
   background: #F0FFF0;
-  border-color: #B0D8B0;
-  cursor: default;
+  border-color: #A0C8A0;
+  cursor: pointer;
+}
+
+.creature-item.owned.affordable:hover {
+  border-color: #80B080;
 }
 
 .creature-item:disabled {
@@ -58,11 +67,26 @@
   flex: 1;
 }
 
+.creature-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
 .creature-name {
   font-family: 'VT323', monospace;
   font-size: 16px;
   color: #5A5A5A;
-  margin-bottom: 2px;
+}
+
+.creature-count {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #7AB87A;
+  background: #E8F5E8;
+  padding: 1px 6px;
+  border-radius: 3px;
 }
 
 .creature-description {
@@ -77,6 +101,11 @@
   font-size: 12px;
   color: #6A9A6A;
   margin-bottom: 4px;
+}
+
+.creature-total {
+  color: #8ABA8A;
+  font-size: 11px;
 }
 
 .creature-cost {

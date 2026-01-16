@@ -1,4 +1,4 @@
-import type { Resource, ResourceType, Upgrade, Creature, Area, AreaType } from '../types/game'
+import type { Resource, ResourceType, Upgrade, Creature, Area, AreaType, Milestone } from '../types/game'
 
 export const initialResources: Record<ResourceType, Resource> = {
   stardust: {
@@ -9,7 +9,7 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 1,
     perSecond: 0,
     icon: 'stardust.png',
-    color: '#E8D5F2', // Soft lavender
+    color: '#E8D5F2',
   },
   rainbowDrops: {
     id: 'rainbowDrops',
@@ -19,7 +19,7 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 0,
     perSecond: 0,
     icon: 'rainbow-drop.png',
-    color: '#FFD5E5', // Soft pink
+    color: '#FFD5E5',
   },
   dreamSeeds: {
     id: 'dreamSeeds',
@@ -29,7 +29,7 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 0,
     perSecond: 0,
     icon: 'dream-seed.png',
-    color: '#D5F5E3', // Soft mint
+    color: '#D5F5E3',
   },
   moonbeams: {
     id: 'moonbeams',
@@ -39,7 +39,7 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 0,
     perSecond: 0,
     icon: 'moonbeam.png',
-    color: '#FFF9E6', // Soft cream
+    color: '#FFF9E6',
   },
   heartGems: {
     id: 'heartGems',
@@ -49,7 +49,7 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 0,
     perSecond: 0,
     icon: 'heart-gem.png',
-    color: '#FFCCD5', // Soft rose
+    color: '#FFCCD5',
   },
   cloudFluff: {
     id: 'cloudFluff',
@@ -59,7 +59,7 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 0,
     perSecond: 0,
     icon: 'cloud-fluff.png',
-    color: '#E6F3FF', // Soft sky blue
+    color: '#E6F3FF',
   },
   wishPetals: {
     id: 'wishPetals',
@@ -69,12 +69,14 @@ export const initialResources: Record<ResourceType, Resource> = {
     perClick: 0,
     perSecond: 0,
     icon: 'wish-petal.png',
-    color: '#F5E6D5', // Soft peach
+    color: '#F5E6D5',
   },
 }
 
 export const initialUpgrades: Upgrade[] = [
-  // Stardust upgrades
+  // ═══════════════════════════════════════════
+  // TIER 1: Early Game - Stardust Focus
+  // ═══════════════════════════════════════════
   {
     id: 'sparkly-fingers',
     name: 'Sparkly Fingers',
@@ -102,6 +104,19 @@ export const initialUpgrades: Upgrade[] = [
     icon: 'firefly.png',
   },
   {
+    id: 'cloud-collector',
+    name: 'Cloud Collector',
+    description: 'Collect fluffy clouds as you gather stardust.',
+    resourceType: 'stardust',
+    cost: 50,
+    costMultiplier: 1.6,
+    purchased: 0,
+    maxPurchases: 10,
+    effect: { type: 'bonusChance', resourceAffected: 'cloudFluff', value: 0.1 },
+    unlocked: true,
+    icon: 'cloud-collector.png',
+  },
+  {
     id: 'rainbow-sight',
     name: 'Rainbow Sight',
     description: 'Chance to find rainbow drops when clicking.',
@@ -115,23 +130,26 @@ export const initialUpgrades: Upgrade[] = [
     icon: 'rainbow-sight.png',
   },
   {
-    id: 'cloud-collector',
-    name: 'Cloud Collector',
-    description: 'Collect fluffy clouds as you gather stardust.',
+    id: 'starlight-blessing',
+    name: 'Starlight Blessing',
+    description: 'The stars smile upon you, doubling stardust gains.',
     resourceType: 'stardust',
-    cost: 50,
-    costMultiplier: 1.6,
+    cost: 500,
+    costMultiplier: 3,
     purchased: 0,
-    maxPurchases: 10,
-    effect: { type: 'bonusChance', resourceAffected: 'cloudFluff', value: 0.1 },
-    unlocked: true,
-    icon: 'cloud-collector.png',
+    maxPurchases: 3,
+    effect: { type: 'globalMultiplier', resourceAffected: 'stardust', value: 2 },
+    unlocked: false,
+    icon: 'starlight-blessing.png',
   },
-  // Rainbow Drops upgrades
+
+  // ═══════════════════════════════════════════
+  // TIER 2: Rainbow Drops & Cloud Fluff
+  // ═══════════════════════════════════════════
   {
     id: 'prism-polish',
     name: 'Prism Polish',
-    description: 'Rainbow drops now give bonus stardust.',
+    description: 'Rainbow drops enhance your stardust gathering.',
     resourceType: 'rainbowDrops',
     cost: 5,
     costMultiplier: 2,
@@ -142,11 +160,54 @@ export const initialUpgrades: Upgrade[] = [
     icon: 'prism.png',
   },
   {
+    id: 'rainbow-trail',
+    name: 'Rainbow Trail',
+    description: 'Your creatures leave rainbows in their wake.',
+    resourceType: 'rainbowDrops',
+    cost: 15,
+    costMultiplier: 2.2,
+    purchased: 0,
+    maxPurchases: 5,
+    effect: { type: 'creatureBoost', resourceAffected: 'rainbowDrops', value: 0.5 },
+    unlocked: false,
+    icon: 'rainbow-trail.png',
+  },
+  {
+    id: 'fluffy-amplifier',
+    name: 'Fluffy Amplifier',
+    description: 'Cloud fluff makes everything softer and more productive.',
+    resourceType: 'cloudFluff',
+    cost: 20,
+    costMultiplier: 1.8,
+    purchased: 0,
+    maxPurchases: null,
+    effect: { type: 'creatureBoost', resourceAffected: 'stardust', value: 0.25 },
+    unlocked: false,
+    icon: 'fluffy-amplifier.png',
+  },
+  {
+    id: 'cloud-weaving',
+    name: 'Cloud Weaving',
+    description: 'Weave clouds into auto-gathering helpers.',
+    resourceType: 'cloudFluff',
+    cost: 30,
+    costMultiplier: 1.7,
+    purchased: 0,
+    maxPurchases: null,
+    effect: { type: 'autoGather', resourceAffected: 'cloudFluff', value: 0.2 },
+    unlocked: false,
+    icon: 'cloud-weaving.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 3: Dream Seeds & Moonbeams
+  // ═══════════════════════════════════════════
+  {
     id: 'dream-catcher',
     name: 'Dream Catcher',
     description: 'Unlock the ability to gather dream seeds.',
     resourceType: 'rainbowDrops',
-    cost: 20,
+    cost: 25,
     costMultiplier: 1,
     purchased: 0,
     maxPurchases: 1,
@@ -154,7 +215,88 @@ export const initialUpgrades: Upgrade[] = [
     unlocked: false,
     icon: 'dream-catcher.png',
   },
-  // Heart Gems upgrades
+  {
+    id: 'lunar-attunement',
+    name: 'Lunar Attunement',
+    description: 'Unlock the ability to gather moonbeams.',
+    resourceType: 'cloudFluff',
+    cost: 50,
+    costMultiplier: 1,
+    purchased: 0,
+    maxPurchases: 1,
+    effect: { type: 'unlockResource', resourceAffected: 'moonbeams', value: 1 },
+    unlocked: false,
+    icon: 'lunar-attunement.png',
+  },
+  {
+    id: 'dreamy-haze',
+    name: 'Dreamy Haze',
+    description: 'Dream seeds create a haze that boosts all production.',
+    resourceType: 'dreamSeeds',
+    cost: 10,
+    costMultiplier: 2.5,
+    purchased: 0,
+    maxPurchases: 5,
+    effect: { type: 'globalMultiplier', resourceAffected: 'stardust', value: 1.5 },
+    unlocked: false,
+    icon: 'dreamy-haze.png',
+  },
+  {
+    id: 'moonlit-garden',
+    name: 'Moonlit Garden',
+    description: 'Moonbeams help dream seeds grow faster.',
+    resourceType: 'moonbeams',
+    cost: 15,
+    costMultiplier: 2,
+    purchased: 0,
+    maxPurchases: null,
+    effect: { type: 'synergyBonus', resourceAffected: 'dreamSeeds', value: 0.5, secondaryResource: 'moonbeams' },
+    unlocked: false,
+    icon: 'moonlit-garden.png',
+  },
+  {
+    id: 'nocturnal-blessing',
+    name: 'Nocturnal Blessing',
+    description: 'The moon grants passive moonbeam generation.',
+    resourceType: 'moonbeams',
+    cost: 25,
+    costMultiplier: 2,
+    purchased: 0,
+    maxPurchases: null,
+    effect: { type: 'autoGather', resourceAffected: 'moonbeams', value: 0.1 },
+    unlocked: false,
+    icon: 'nocturnal-blessing.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 4: Heart Gems & Wish Petals
+  // ═══════════════════════════════════════════
+  {
+    id: 'heart-awakening',
+    name: 'Heart Awakening',
+    description: 'Unlock the ability to gather heart gems.',
+    resourceType: 'dreamSeeds',
+    cost: 30,
+    costMultiplier: 1,
+    purchased: 0,
+    maxPurchases: 1,
+    effect: { type: 'unlockResource', resourceAffected: 'heartGems', value: 1 },
+    unlocked: false,
+    icon: 'heart-awakening.png',
+  },
+  {
+    id: 'wishing-wind',
+    name: 'Wishing Wind',
+    description: 'Unlock the ability to gather wish petals.',
+    resourceType: 'moonbeams',
+    cost: 40,
+    costMultiplier: 1,
+    purchased: 0,
+    maxPurchases: 1,
+    effect: { type: 'unlockResource', resourceAffected: 'wishPetals', value: 1 },
+    unlocked: false,
+    icon: 'wishing-wind.png',
+  },
   {
     id: 'caring-aura',
     name: 'Caring Aura',
@@ -168,78 +310,526 @@ export const initialUpgrades: Upgrade[] = [
     unlocked: false,
     icon: 'caring-aura.png',
   },
+  {
+    id: 'heart-harmony',
+    name: 'Heart Harmony',
+    description: 'Heart gems boost creature production significantly.',
+    resourceType: 'heartGems',
+    cost: 25,
+    costMultiplier: 2.2,
+    purchased: 0,
+    maxPurchases: null,
+    effect: { type: 'creatureBoost', resourceAffected: 'stardust', value: 1 },
+    unlocked: false,
+    icon: 'heart-harmony.png',
+  },
+  {
+    id: 'wish-amplifier',
+    name: 'Wish Amplifier',
+    description: 'Wishes become stronger, boosting all resources.',
+    resourceType: 'wishPetals',
+    cost: 15,
+    costMultiplier: 2.5,
+    purchased: 0,
+    maxPurchases: 5,
+    effect: { type: 'globalMultiplier', resourceAffected: 'stardust', value: 2 },
+    unlocked: false,
+    icon: 'wish-amplifier.png',
+  },
+  {
+    id: 'petal-storm',
+    name: 'Petal Storm',
+    description: 'A gentle storm of petals produces resources passively.',
+    resourceType: 'wishPetals',
+    cost: 30,
+    costMultiplier: 1.9,
+    purchased: 0,
+    maxPurchases: null,
+    effect: { type: 'autoGather', resourceAffected: 'wishPetals', value: 0.15 },
+    unlocked: false,
+    icon: 'petal-storm.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 5: Synergy & Late Game
+  // ═══════════════════════════════════════════
+  {
+    id: 'rainbow-heart',
+    name: 'Rainbow Heart',
+    description: 'Rainbow drops and heart gems create powerful synergy.',
+    resourceType: 'heartGems',
+    cost: 50,
+    costMultiplier: 2.5,
+    purchased: 0,
+    maxPurchases: 3,
+    effect: { type: 'synergyBonus', resourceAffected: 'rainbowDrops', value: 1, secondaryResource: 'heartGems' },
+    unlocked: false,
+    icon: 'rainbow-heart.png',
+  },
+  {
+    id: 'dream-weaver',
+    name: 'Dream Weaver',
+    description: 'Weave dreams and wishes together for massive bonuses.',
+    resourceType: 'wishPetals',
+    cost: 75,
+    costMultiplier: 3,
+    purchased: 0,
+    maxPurchases: 3,
+    effect: { type: 'synergyBonus', resourceAffected: 'dreamSeeds', value: 2, secondaryResource: 'wishPetals' },
+    unlocked: false,
+    icon: 'dream-weaver.png',
+  },
+  {
+    id: 'celestial-convergence',
+    name: 'Celestial Convergence',
+    description: 'All magical forces align, multiplying everything.',
+    resourceType: 'stardust',
+    cost: 10000,
+    costMultiplier: 5,
+    purchased: 0,
+    maxPurchases: 3,
+    effect: { type: 'globalMultiplier', resourceAffected: 'stardust', value: 5 },
+    unlocked: false,
+    icon: 'celestial-convergence.png',
+  },
 ]
 
 export const initialCreatures: Creature[] = [
+  // ═══════════════════════════════════════════
+  // TIER 1: Stardust Producers
+  // ═══════════════════════════════════════════
   {
     id: 'sparkle-bunny',
     name: 'Sparkle Bunny',
     description: 'A fluffy friend who hops around collecting stardust.',
-    unlocked: false,
+    count: 0,
+    baseCost: [{ resource: 'stardust', amount: 50 }],
+    costMultiplier: 1.15,
     produces: { resource: 'stardust', amount: 1 },
-    cost: [{ resource: 'stardust', amount: 100 }],
     icon: 'sparkle-bunny.png',
   },
+  {
+    id: 'glimmer-mouse',
+    name: 'Glimmer Mouse',
+    description: 'A tiny mouse with a sparkly tail that finds hidden stardust.',
+    count: 0,
+    baseCost: [{ resource: 'stardust', amount: 200 }],
+    costMultiplier: 1.18,
+    produces: { resource: 'stardust', amount: 4 },
+    icon: 'glimmer-mouse.png',
+  },
+  {
+    id: 'starlight-fox',
+    name: 'Starlight Fox',
+    description: 'A graceful fox whose fur shimmers with captured starlight.',
+    count: 0,
+    baseCost: [{ resource: 'stardust', amount: 1000 }],
+    costMultiplier: 1.2,
+    produces: { resource: 'stardust', amount: 15 },
+    icon: 'starlight-fox.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 2: Cloud & Rainbow Producers
+  // ═══════════════════════════════════════════
   {
     id: 'cloud-sheep',
     name: 'Cloud Sheep',
     description: 'A gentle sheep made of clouds. Produces cloud fluff.',
-    unlocked: false,
-    produces: { resource: 'cloudFluff', amount: 0.5 },
-    cost: [
-      { resource: 'stardust', amount: 200 },
-      { resource: 'cloudFluff', amount: 10 },
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 150 },
+      { resource: 'cloudFluff', amount: 5 },
     ],
+    costMultiplier: 1.18,
+    produces: { resource: 'cloudFluff', amount: 0.5 },
     icon: 'cloud-sheep.png',
+  },
+  {
+    id: 'fluff-kitten',
+    name: 'Fluff Kitten',
+    description: 'An impossibly soft kitten that sheds clouds wherever it naps.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 500 },
+      { resource: 'cloudFluff', amount: 20 },
+    ],
+    costMultiplier: 1.2,
+    produces: { resource: 'cloudFluff', amount: 2 },
+    icon: 'fluff-kitten.png',
   },
   {
     id: 'rainbow-bird',
     name: 'Rainbow Bird',
     description: 'A colorful bird that leaves rainbow drops wherever it flies.',
-    unlocked: false,
-    produces: { resource: 'rainbowDrops', amount: 0.2 },
-    cost: [
-      { resource: 'stardust', amount: 500 },
-      { resource: 'rainbowDrops', amount: 5 },
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 300 },
+      { resource: 'rainbowDrops', amount: 3 },
     ],
+    costMultiplier: 1.2,
+    produces: { resource: 'rainbowDrops', amount: 0.3 },
     icon: 'rainbow-bird.png',
+  },
+  {
+    id: 'prism-butterfly',
+    name: 'Prism Butterfly',
+    description: 'A butterfly with wings that split light into rainbows.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 800 },
+      { resource: 'rainbowDrops', amount: 10 },
+    ],
+    costMultiplier: 1.22,
+    produces: { resource: 'rainbowDrops', amount: 1 },
+    icon: 'prism-butterfly.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 3: Dream & Moon Producers
+  // ═══════════════════════════════════════════
+  {
+    id: 'dream-fawn',
+    name: 'Dream Fawn',
+    description: 'A gentle fawn that plants dream seeds as it walks.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 600 },
+      { resource: 'dreamSeeds', amount: 5 },
+    ],
+    costMultiplier: 1.2,
+    produces: { resource: 'dreamSeeds', amount: 0.4 },
+    icon: 'dream-fawn.png',
+  },
+  {
+    id: 'slumber-owl',
+    name: 'Slumber Owl',
+    description: 'A wise owl that brings peaceful dreams wherever it perches.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 1500 },
+      { resource: 'dreamSeeds', amount: 15 },
+    ],
+    costMultiplier: 1.22,
+    produces: { resource: 'dreamSeeds', amount: 1.5 },
+    icon: 'slumber-owl.png',
   },
   {
     id: 'moon-moth',
     name: 'Moon Moth',
     description: 'A luminous moth that captures moonbeams at night.',
-    unlocked: false,
-    produces: { resource: 'moonbeams', amount: 0.3 },
-    cost: [
-      { resource: 'stardust', amount: 750 },
-      { resource: 'moonbeams', amount: 5 },
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 500 },
+      { resource: 'moonbeams', amount: 3 },
     ],
+    costMultiplier: 1.2,
+    produces: { resource: 'moonbeams', amount: 0.3 },
     icon: 'moon-moth.png',
   },
+  {
+    id: 'lunar-rabbit',
+    name: 'Lunar Rabbit',
+    description: 'A rabbit that lives on moonbeams and shares their glow.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 1200 },
+      { resource: 'moonbeams', amount: 12 },
+    ],
+    costMultiplier: 1.22,
+    produces: { resource: 'moonbeams', amount: 1.2 },
+    icon: 'lunar-rabbit.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 4: Heart & Wish Producers
+  // ═══════════════════════════════════════════
   {
     id: 'heart-bear',
     name: 'Heart Bear',
     description: 'A cuddly bear that radiates love and creates heart gems.',
-    unlocked: false,
-    produces: { resource: 'heartGems', amount: 0.1 },
-    cost: [
+    count: 0,
+    baseCost: [
       { resource: 'stardust', amount: 1000 },
       { resource: 'heartGems', amount: 3 },
     ],
+    costMultiplier: 1.22,
+    produces: { resource: 'heartGems', amount: 0.2 },
     icon: 'heart-bear.png',
+  },
+  {
+    id: 'love-dove',
+    name: 'Love Dove',
+    description: 'A gentle dove that spreads love and crystallizes it into gems.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 2500 },
+      { resource: 'heartGems', amount: 10 },
+    ],
+    costMultiplier: 1.25,
+    produces: { resource: 'heartGems', amount: 0.8 },
+    icon: 'love-dove.png',
   },
   {
     id: 'wish-dragon',
     name: 'Wish Dragon',
     description: 'A tiny, friendly dragon that grants wishes and creates wish petals.',
-    unlocked: false,
-    produces: { resource: 'wishPetals', amount: 0.2 },
-    cost: [
-      { resource: 'stardust', amount: 2000 },
-      { resource: 'wishPetals', amount: 10 },
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 1500 },
+      { resource: 'wishPetals', amount: 5 },
+    ],
+    costMultiplier: 1.22,
+    produces: { resource: 'wishPetals', amount: 0.25 },
+    icon: 'wish-dragon.png',
+  },
+  {
+    id: 'hope-phoenix',
+    name: 'Hope Phoenix',
+    description: 'A majestic bird reborn from wishes, trailing petals of hope.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 4000 },
+      { resource: 'wishPetals', amount: 20 },
       { resource: 'heartGems', amount: 5 },
     ],
-    icon: 'wish-dragon.png',
+    costMultiplier: 1.25,
+    produces: { resource: 'wishPetals', amount: 1 },
+    icon: 'hope-phoenix.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // TIER 5: Legendary Multi-Producers
+  // ═══════════════════════════════════════════
+  {
+    id: 'celestial-unicorn',
+    name: 'Celestial Unicorn',
+    description: 'A magnificent unicorn that produces stardust and rainbow drops.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 5000 },
+      { resource: 'rainbowDrops', amount: 30 },
+      { resource: 'heartGems', amount: 10 },
+    ],
+    costMultiplier: 1.3,
+    produces: { resource: 'stardust', amount: 50 },
+    icon: 'celestial-unicorn.png',
+  },
+  {
+    id: 'aurora-serpent',
+    name: 'Aurora Serpent',
+    description: 'A gentle serpent that dances through the sky, creating auroras.',
+    count: 0,
+    baseCost: [
+      { resource: 'stardust', amount: 10000 },
+      { resource: 'moonbeams', amount: 50 },
+      { resource: 'wishPetals', amount: 30 },
+    ],
+    costMultiplier: 1.35,
+    produces: { resource: 'moonbeams', amount: 5 },
+    icon: 'aurora-serpent.png',
+  },
+]
+
+export const initialMilestones: Milestone[] = [
+  // ═══════════════════════════════════════════
+  // CLICK MILESTONES
+  // ═══════════════════════════════════════════
+  {
+    id: 'first-sparkle',
+    name: 'First Sparkle',
+    description: 'Click 10 times to begin your magical journey.',
+    requirement: { type: 'totalClicks', amount: 10 },
+    reward: { type: 'clickBonus', value: 1 },
+    achieved: false,
+    icon: 'milestone-click-1.png',
+  },
+  {
+    id: 'eager-gatherer',
+    name: 'Eager Gatherer',
+    description: 'Click 100 times!',
+    requirement: { type: 'totalClicks', amount: 100 },
+    reward: { type: 'clickBonus', value: 2 },
+    achieved: false,
+    icon: 'milestone-click-2.png',
+  },
+  {
+    id: 'dedicated-collector',
+    name: 'Dedicated Collector',
+    description: 'Click 1,000 times!',
+    requirement: { type: 'totalClicks', amount: 1000 },
+    reward: { type: 'globalMultiplier', value: 1.5 },
+    achieved: false,
+    icon: 'milestone-click-3.png',
+  },
+  {
+    id: 'tireless-spirit',
+    name: 'Tireless Spirit',
+    description: 'Click 10,000 times!',
+    requirement: { type: 'totalClicks', amount: 10000 },
+    reward: { type: 'globalMultiplier', value: 2 },
+    achieved: false,
+    icon: 'milestone-click-4.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // STARDUST MILESTONES
+  // ═══════════════════════════════════════════
+  {
+    id: 'stardust-sprinkle',
+    name: 'Stardust Sprinkle',
+    description: 'Gather 100 stardust total.',
+    requirement: { type: 'totalResource', resource: 'stardust', amount: 100 },
+    reward: { type: 'productionBonus', value: 1.1, resourceAffected: 'stardust' },
+    achieved: false,
+    icon: 'milestone-stardust-1.png',
+  },
+  {
+    id: 'stardust-shower',
+    name: 'Stardust Shower',
+    description: 'Gather 1,000 stardust total.',
+    requirement: { type: 'totalResource', resource: 'stardust', amount: 1000 },
+    reward: { type: 'productionBonus', value: 1.25, resourceAffected: 'stardust' },
+    achieved: false,
+    icon: 'milestone-stardust-2.png',
+  },
+  {
+    id: 'stardust-storm',
+    name: 'Stardust Storm',
+    description: 'Gather 10,000 stardust total.',
+    requirement: { type: 'totalResource', resource: 'stardust', amount: 10000 },
+    reward: { type: 'globalMultiplier', value: 1.5 },
+    achieved: false,
+    icon: 'milestone-stardust-3.png',
+  },
+  {
+    id: 'stardust-supernova',
+    name: 'Stardust Supernova',
+    description: 'Gather 100,000 stardust total.',
+    requirement: { type: 'totalResource', resource: 'stardust', amount: 100000 },
+    reward: { type: 'globalMultiplier', value: 2 },
+    achieved: false,
+    icon: 'milestone-stardust-4.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // CREATURE MILESTONES
+  // ═══════════════════════════════════════════
+  {
+    id: 'first-friend',
+    name: 'First Friend',
+    description: 'Adopt your first creature.',
+    requirement: { type: 'creatureCount', amount: 1 },
+    reward: { type: 'productionBonus', value: 1.2, resourceAffected: 'stardust' },
+    achieved: false,
+    icon: 'milestone-creature-1.png',
+  },
+  {
+    id: 'friendly-bunch',
+    name: 'Friendly Bunch',
+    description: 'Own 5 creatures total.',
+    requirement: { type: 'creatureCount', amount: 5 },
+    reward: { type: 'globalMultiplier', value: 1.25 },
+    achieved: false,
+    icon: 'milestone-creature-2.png',
+  },
+  {
+    id: 'creature-keeper',
+    name: 'Creature Keeper',
+    description: 'Own 15 creatures total.',
+    requirement: { type: 'creatureCount', amount: 15 },
+    reward: { type: 'globalMultiplier', value: 1.5 },
+    achieved: false,
+    icon: 'milestone-creature-3.png',
+  },
+  {
+    id: 'magical-menagerie',
+    name: 'Magical Menagerie',
+    description: 'Own 50 creatures total.',
+    requirement: { type: 'creatureCount', amount: 50 },
+    reward: { type: 'globalMultiplier', value: 2 },
+    achieved: false,
+    icon: 'milestone-creature-4.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // AREA MILESTONES
+  // ═══════════════════════════════════════════
+  {
+    id: 'rainbow-explorer',
+    name: 'Rainbow Explorer',
+    description: 'Unlock Rainbow Falls.',
+    requirement: { type: 'areaUnlock', amount: 2 },
+    reward: { type: 'productionBonus', value: 1.3, resourceAffected: 'rainbowDrops' },
+    achieved: false,
+    icon: 'milestone-area-1.png',
+  },
+  {
+    id: 'dream-wanderer',
+    name: 'Dream Wanderer',
+    description: 'Unlock Dream Garden.',
+    requirement: { type: 'areaUnlock', amount: 3 },
+    reward: { type: 'productionBonus', value: 1.3, resourceAffected: 'dreamSeeds' },
+    achieved: false,
+    icon: 'milestone-area-2.png',
+  },
+  {
+    id: 'heart-seeker',
+    name: 'Heart Seeker',
+    description: 'Unlock Heart Crystal Cave.',
+    requirement: { type: 'areaUnlock', amount: 4 },
+    reward: { type: 'productionBonus', value: 1.5, resourceAffected: 'heartGems' },
+    achieved: false,
+    icon: 'milestone-area-3.png',
+  },
+
+  // ═══════════════════════════════════════════
+  // SPECIAL RESOURCE MILESTONES
+  // ═══════════════════════════════════════════
+  {
+    id: 'rainbow-collector',
+    name: 'Rainbow Collector',
+    description: 'Gather 100 rainbow drops total.',
+    requirement: { type: 'totalResource', resource: 'rainbowDrops', amount: 100 },
+    reward: { type: 'productionBonus', value: 1.5, resourceAffected: 'rainbowDrops' },
+    achieved: false,
+    icon: 'milestone-rainbow.png',
+  },
+  {
+    id: 'dream-gardener',
+    name: 'Dream Gardener',
+    description: 'Gather 100 dream seeds total.',
+    requirement: { type: 'totalResource', resource: 'dreamSeeds', amount: 100 },
+    reward: { type: 'productionBonus', value: 1.5, resourceAffected: 'dreamSeeds' },
+    achieved: false,
+    icon: 'milestone-dream.png',
+  },
+  {
+    id: 'moonchild',
+    name: 'Moonchild',
+    description: 'Gather 100 moonbeams total.',
+    requirement: { type: 'totalResource', resource: 'moonbeams', amount: 100 },
+    reward: { type: 'productionBonus', value: 1.5, resourceAffected: 'moonbeams' },
+    achieved: false,
+    icon: 'milestone-moon.png',
+  },
+  {
+    id: 'heartfelt',
+    name: 'Heartfelt',
+    description: 'Gather 50 heart gems total.',
+    requirement: { type: 'totalResource', resource: 'heartGems', amount: 50 },
+    reward: { type: 'productionBonus', value: 1.5, resourceAffected: 'heartGems' },
+    achieved: false,
+    icon: 'milestone-heart.png',
+  },
+  {
+    id: 'wishmaker',
+    name: 'Wishmaker',
+    description: 'Gather 50 wish petals total.',
+    requirement: { type: 'totalResource', resource: 'wishPetals', amount: 50 },
+    reward: { type: 'productionBonus', value: 1.5, resourceAffected: 'wishPetals' },
+    achieved: false,
+    icon: 'milestone-wish.png',
   },
 ]
 
@@ -272,8 +862,8 @@ export const areas: Record<AreaType, Area> = {
     primaryResource: 'dreamSeeds',
     secondaryResource: 'wishPetals',
     unlockCost: [
-      { resource: 'stardust', amount: 1000 },
-      { resource: 'dreamSeeds', amount: 20 },
+      { resource: 'stardust', amount: 1500 },
+      { resource: 'dreamSeeds', amount: 25 },
     ],
     background: 'dream-garden-bg.png',
   },
@@ -284,8 +874,8 @@ export const areas: Record<AreaType, Area> = {
     primaryResource: 'heartGems',
     secondaryResource: 'moonbeams',
     unlockCost: [
-      { resource: 'stardust', amount: 2000 },
-      { resource: 'heartGems', amount: 15 },
+      { resource: 'stardust', amount: 3000 },
+      { resource: 'heartGems', amount: 20 },
     ],
     background: 'heart-cave-bg.png',
   },

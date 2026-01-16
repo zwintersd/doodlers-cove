@@ -1,0 +1,103 @@
+.milestone-display {
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+  padding: 12px;
+}
+
+.milestone-header {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #9B8BB8;
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed #E8D5F2;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.milestone-count {
+  font-size: 14px;
+  color: #7AB87A;
+  background: #E8F5E8;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.milestone-section {
+  margin-bottom: 12px;
+}
+
+.milestone-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #8A8A9A;
+  margin-bottom: 6px;
+}
+
+.milestone-item {
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  background: #FAFAFA;
+  border: 1px solid #E8E8E8;
+}
+
+.milestone-item.upcoming {
+  background: #FFF8F0;
+  border-color: #E8D8C8;
+}
+
+.milestone-item.achieved {
+  background: #F0FFF0;
+  border-color: #C8E8C8;
+}
+
+.milestone-icon {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #9B8BB8;
+  width: 24px;
+  text-align: center;
+}
+
+.milestone-item.achieved .milestone-icon {
+  color: #7AB87A;
+}
+
+.milestone-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.milestone-name {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #5A5A5A;
+}
+
+.milestone-desc {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 11px;
+  color: #8A8A8A;
+}
+
+.milestone-reward {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 11px;
+  color: #6A9A6A;
+}
+
+.achieved-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
