@@ -1,6 +1,4 @@
 .creature-shop {
-  background: #FFFEF5;
-  border: 3px solid #D5C4E8;
   padding: 12px;
 }
 
@@ -15,12 +13,11 @@
 .creature-item {
   display: flex;
   gap: 12px;
-  background: #FFF8F5;
-  border: 2px solid #E0D0D0;
+  background: var(--bg-panel);
   padding: 10px 12px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.1s ease;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   opacity: 0.6;
 }
 
@@ -35,8 +32,8 @@
 
 .creature-item.owned {
   opacity: 1;
-  background: #F8FFF8;
-  border-color: #C0D8C0;
+  background: var(--pastel-mint);
+  border-color: var(--pastel-lavender);
 }
 
 .creature-item.owned.affordable {
@@ -46,7 +43,8 @@
 }
 
 .creature-item.owned.affordable:hover {
-  border-color: #80B080;
+  border-color: var(--border-dark);
+  transform: translateY(-2px);
 }
 
 .creature-item:disabled {
@@ -54,13 +52,21 @@
 }
 
 .creature-art {
-  font-family: 'VT323', monospace;
-  font-size: 24px;
-  color: #9B8BB8;
-  min-width: 50px;
+  min-width: 64px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.creature-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .creature-info {
