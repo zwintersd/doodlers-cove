@@ -1,0 +1,138 @@
+/* Main App Layout */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  padding: 16px;
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+  margin-bottom: 12px;
+}
+
+.app-title {
+  font-family: 'VT323', monospace;
+  font-size: 36px;
+  color: #7B68A8;
+  letter-spacing: 2px;
+}
+
+.app-subtitle {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
+  color: #9A8AB8;
+  margin: 4px 0 0 0;
+}
+
+/* Main content area */
+.app-main {
+  display: grid;
+  grid-template-columns: 240px 1fr 280px;
+  gap: 12px;
+  flex: 1;
+  margin-top: 12px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-left {
+  /* Resources panel */
+}
+
+.sidebar-right {
+  /* Shops panel */
+}
+
+.game-center {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Stats bar */
+.stats-bar {
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+  padding: 8px 16px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #7B68A8;
+  text-align: center;
+}
+
+/* Footer */
+.app-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-top: 12px;
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+}
+
+.footer-text {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #9B8BB8;
+}
+
+.reset-button {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #AA8A8A;
+  background: #FFF5F5;
+  border: 2px solid #E0D0D0;
+  padding: 4px 12px;
+}
+
+.reset-button:hover {
+  background: #FFE8E8;
+  border-color: #D0B0B0;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+  .app-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .sidebar-left {
+    order: 1;
+  }
+
+  .game-center {
+    order: 0;
+  }
+
+  .sidebar-right {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 8px;
+  }
+
+  .app-title {
+    font-size: 28px;
+  }
+
+  .app-main {
+    gap: 8px;
+  }
+}

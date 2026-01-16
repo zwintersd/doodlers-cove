@@ -1,0 +1,97 @@
+.creature-shop {
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+  padding: 12px;
+}
+
+.creature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.creature-item {
+  display: flex;
+  gap: 12px;
+  background: #FFF8F5;
+  border: 2px solid #E0D0D0;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.1s ease;
+  opacity: 0.6;
+}
+
+.creature-item.affordable {
+  opacity: 1;
+  border-color: #D0C0E0;
+}
+
+.creature-item.affordable:hover {
+  border-color: #B0A0C0;
+}
+
+.creature-item.owned {
+  opacity: 1;
+  background: #F0FFF0;
+  border-color: #B0D8B0;
+  cursor: default;
+}
+
+.creature-item:disabled {
+  cursor: not-allowed;
+}
+
+.creature-art {
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: #9B8BB8;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.creature-info {
+  flex: 1;
+}
+
+.creature-name {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #5A5A5A;
+  margin-bottom: 2px;
+}
+
+.creature-description {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 12px;
+  color: #7A7A7A;
+  margin-bottom: 4px;
+}
+
+.creature-produces {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 12px;
+  color: #6A9A6A;
+  margin-bottom: 4px;
+}
+
+.creature-cost {
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+}
+
+.creature-cost .can-afford {
+  color: #6A8A6A;
+}
+
+.creature-cost .cannot-afford {
+  color: #AA6A6A;
+}
+
+.owned-text {
+  color: #7AB87A;
+}

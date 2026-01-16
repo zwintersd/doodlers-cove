@@ -1,0 +1,59 @@
+.resource-display {
+  background: #FFFEF5;
+  border: 3px solid #D5C4E8;
+  padding: 12px;
+  min-width: 200px;
+}
+
+.resource-header {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #9B8BB8;
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed #E8D5F2;
+  margin-bottom: 8px;
+}
+
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: var(--resource-color, #F5F5F5);
+  border: 2px solid #E0E0E0;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
+}
+
+.resource-icon {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.resource-name {
+  flex: 1;
+  color: #5A5A5A;
+}
+
+.resource-amount {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #4A4A4A;
+  min-width: 60px;
+  text-align: right;
+}
+
+.resource-rate {
+  font-size: 12px;
+  color: #7A7A7A;
+  min-width: 60px;
+}
